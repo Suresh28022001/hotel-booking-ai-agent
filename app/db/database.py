@@ -1,19 +1,12 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 from app.core.config import settings
-from sqlalchemy.ext.asyncio import create_async_engine
-
-# engine = create_async_engine(
-#     settings.database_url,
-#     echo=settings.debug,
-#     pool_pre_ping=True,
-#     pool_size=10,
-#     max_overflow=20,
-# )
 
 engine = create_async_engine(
     settings.database_url,
-    echo=True,
+    echo=False,  # turn off SQL logs in production
+    pool_pre_ping=True,
+    connect_args={"ssl": True},  # ✅ REQUIRED for Render PostgreSQL
 )
 
 AsyncSessionLocal = async_sessionmaker(
