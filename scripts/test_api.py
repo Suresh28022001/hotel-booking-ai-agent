@@ -7,8 +7,9 @@ import asyncio
 import httpx
 import json
 
-BASE_URL = "http://localhost:8000/api/v1"
+# BASE_URL = "http://localhost:8000/api/v1"
 
+BASE_URL = "https://hotel-booking-ai-agent.onrender.com/api/v1"
 
 async def main():
     async with httpx.AsyncClient(timeout=30.0) as client:
