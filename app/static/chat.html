@@ -599,7 +599,7 @@
   function getBaseUrl() {
     return (document.getElementById('base-url-input')?.value ||
             document.getElementById('api-url-setting')?.value ||
-            'http://localhost:8000').replace(/\/$/, '');
+            window.location.origin).replace(/\/$/, '');
   }
 
   // ── INIT ──
