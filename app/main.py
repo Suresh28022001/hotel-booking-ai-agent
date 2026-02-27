@@ -9,6 +9,9 @@ from app.db.database import create_tables
 from app.api.middleware import error_handler_middleware, validation_exception_handler
 from app.api.routes import auth, hotels, bookings, agent
 
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -51,3 +54,11 @@ app.include_router(agent.router, prefix="/api/v1")
 @app.get("/health", tags=["Health"])
 async def health():
     return {"status": "ok", "service": settings.app_name, "env": settings.app_env}
+
+# ─── Frontend ───────────────────────────────────────────────────────────────
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+@app.get("/", include_in_schema=False)
+async def serve_frontend():
+    return FileResponse("app/static/chat.html")
